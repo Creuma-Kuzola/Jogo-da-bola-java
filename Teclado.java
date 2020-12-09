@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package JogoBola;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -49,7 +48,6 @@ public class Teclado implements KeyListener{
     public void keyPressed(KeyEvent e) {
         
         int key = e.getKeyCode();
-        System.out.println("Key"+key);
         
         if(key == KeyEvent.VK_RIGHT)
             frente = true;
@@ -64,7 +62,6 @@ public class Teclado implements KeyListener{
     public void keyReleased(KeyEvent e) {
         
         int key = e.getKeyCode();
-        
         if(key == KeyEvent.VK_RIGHT)
             frente = false;
         if(key == KeyEvent.VK_UP)
