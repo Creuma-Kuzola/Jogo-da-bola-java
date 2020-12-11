@@ -20,7 +20,7 @@ import java.awt.event.ActionListener;
  *
  * @author creuma
  */
-public class PainelJogoBola extends JPanel implements Runnable {
+public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
 
     Bola bola;
     static Teclado teclado = new Teclado();
@@ -44,7 +44,6 @@ public class PainelJogoBola extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
-        /*
         // Anti-aliasing
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2d.setPaint(new Color(0, 0, 0));
@@ -57,7 +56,7 @@ public class PainelJogoBola extends JPanel implements Runnable {
         g2d.setPaint(Color.YELLOW);
         g2d.fillOval(bola.getPosX(), bola.getPosY(), bola.getWidth(), bola.getHeight());
         // pintarBola(g2d);
-    */
+
     }
     /*
      * public void pintarEstrada(Graphics2D g2d){
@@ -86,6 +85,10 @@ public class PainelJogoBola extends JPanel implements Runnable {
 
     }
 
+    @Override
+    public void actionPerformed(ActionEvent arg0) {
+
+    }
 
     @Override
     public void run() {
