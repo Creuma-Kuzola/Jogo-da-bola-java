@@ -1,3 +1,5 @@
+package JogoBola;
+
 public class Bola {
     private int posX, posY;
     private int width, height;

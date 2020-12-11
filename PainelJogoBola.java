@@ -1,3 +1,5 @@
+package JogoBola;
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -100,7 +102,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
                 // thread.sleep(150);
                 this.repaint();
 
-                Thread.sleep(1000 / 24);
+                Thread.sleep(13);
             }
 
         } catch (Exception e) {
