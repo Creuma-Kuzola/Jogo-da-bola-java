@@ -1,11 +1,20 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package JogoBola;
 
-public class Bola {
+/**
+ *
+ * @author creuma
+ */
+public class Quadrado {
     
     private int posX, posY;
     private int width, height;
 
-    public Bola(int posX, int posY, int width, int height) {
+    public Quadrado(int posX, int posY, int width, int height) {
         this.posX = posX;
         this.posY = posY;
         this.width = width;
@@ -42,4 +51,5 @@ public class Bola {
     public int getHeight() {
         return height;
     }
+    
 }
