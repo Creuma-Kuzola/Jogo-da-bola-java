@@ -6,6 +6,7 @@ package JogoBola;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -17,6 +18,7 @@ import java.awt.geom.Ellipse2D;
 import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.GeneralPath;
 
 /**
  *
@@ -24,24 +26,25 @@ import java.awt.event.ActionListener;
  */
 public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
 
-    Bola bola,circulo;
+    Bola bolaPrincipal,circuloPontos,circuloRecuarPosX;
     Triangulo triangulo;
-    Rectangulo rectangulo;
+    Quadrado quadrado;
     Teclado teclado = new Teclado();
     Thread thread;
-    public AffineTransform atf;
+    AffineTransform atf ;
 
     public PainelJogoBola() {
-        
-        //thread = new Thread(this);
+      
         new Thread(this).start();
-        bola = new Bola(20, 290, 40, 40);
-        circulo = new Bola(80,290,40,40);
-        rectangulo = new Rectangulo(130,290,40,40);
-        //triangulo = new Triangulo();
+        
+        bolaPrincipal = new Bola(20, 290, 40, 40);
+        circuloPontos = new Bola(80,290,40,40);
+        quadrado = new Quadrado(130,290,40,40);
+        circuloRecuarPosX = new Bola(180,290,40,40);
+        
         this.setFocusable(true);
         addKeyListener(teclado);
-       // thread.start();
+      
     }
 
     @Override
@@ -56,32 +59,35 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         g2d.setPaint(new Color(0, 0, 0));
         g2d.fillRect(0, 277, 770, 80);
 
-        atf = g2d.getTransform();
-        
-        g2d.translate(bola.getPosX(), bola.getPosY());
+        atf = new AffineTransform();
+        g2d.getTransform();
+        g2d.translate(bolaPrincipal.getPosX(), bolaPrincipal.getPosY());
         g2d.setTransform(atf);
       
         g2d.setPaint(Color.MAGENTA);
-        g2d.fillOval(circulo.getPosX(), circulo.getPosY(), circulo.getWidth(), circulo.getHeight());
+        g2d.fillOval(circuloPontos.getPosX(), circuloPontos.getPosY(), circuloPontos.getWidth(), circuloPontos.getHeight());
         
-        g2d.setPaint(new Color(37,153,179));       
-        g2d.fillRect(rectangulo.getPosX(),rectangulo.getPosY(),rectangulo.getWidth(),rectangulo.getHeight());
+        g2d.setPaint(Color.RED);    
+        g2d.fillRect(quadrado.getPosX(),quadrado.getPosY(),quadrado.getWidth(),quadrado.getHeight());
 
+        g2d.setPaint(new Color(37,153,179));     
+        g2d.fillOval(circuloRecuarPosX.getPosX(),circuloRecuarPosX.getPosY(),circuloRecuarPosX.getWidth(),circuloRecuarPosX.getHeight());
+        
         g2d.setPaint(Color.YELLOW);
-        g2d.fillOval(bola.getPosX(), bola.getPosY(), bola.getWidth(), bola.getHeight());
+        g2d.fillOval(bolaPrincipal.getPosX(), bolaPrincipal.getPosY(), bolaPrincipal.getWidth(), bolaPrincipal.getHeight());
         
         }
    
     public void atualizar() {
 
         if (teclado.isCima()) 
-            bola.setPosY(bola.getPosY() - 2);
+            bolaPrincipal.setPosY(bolaPrincipal.getPosY() - 2);
         
         if (teclado.isBaixo()) 
-            bola.setPosY(bola.getPosY() + 2);
+            bolaPrincipal.setPosY(bolaPrincipal.getPosY() + 2);
         
         if (teclado.isFrente()) 
-            bola.setPosX(bola.getPosX() + 2);
+            bolaPrincipal.setPosX(bolaPrincipal.getPosX() + 2);
         
 
     }
