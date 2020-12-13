@@ -1,4 +1,4 @@
-package JogoBola;
+//package JogoBola;
 
 
 /*
@@ -27,7 +27,7 @@ import java.awt.geom.GeneralPath;
 public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
 
     Bola bolaPrincipal,circuloPontos,circuloRecuarPosX;
-    Triangulo triangulo;
+    //Triangulo triangulo;
     Quadrado quadrado;
     Teclado teclado = new Teclado();
     Thread thread;
