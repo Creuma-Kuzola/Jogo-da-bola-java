@@ -92,13 +92,13 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
        
         g2d.setTransform(atf);
       
-        /*
+        
         g2d.setPaint(Color.MAGENTA);
         g2d.fillOval(circuloPontos.getPosX(), circuloPontos.getPosY(), circuloPontos.getWidth(), circuloPontos.getHeight());
         
         g2d.setPaint(new Color(37,153,179));     
         g2d.fillOval(circuloRecuarPosX.getPosX(),circuloRecuarPosX.getPosY(),circuloRecuarPosX.getWidth(),circuloRecuarPosX.getHeight());
-        */
+        
         
         g2d.getTransform();
         atf = new AffineTransform();
@@ -124,9 +124,26 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         //Função responsável por gerar a ordem em que obstáculos irão entrar
         public int gerarOrdemDosObstaculos()
         {  
-            return new Random().nextInt(4);
+            int rand;
+            while(true)
+            {
+                rand = new Random().nextInt(4);
+                if(rand!=0)break;
+                else rand = new Random().nextInt(4);
+            }
+            
+            return rand;
         }        
         
+        
+        public void ordemObstaculos()
+        {
+            int rand = gerarOrdemDosObstaculos();
+            
+            
+                
+                
+        }        
        //Função responsável por actualizar o teclado
       public void atualizar() {
 
