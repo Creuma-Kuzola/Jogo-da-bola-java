@@ -124,14 +124,13 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         //Função responsável por gerar a ordem em que obstáculos irão entrar
         public int gerarOrdemDosObstaculos()
         {  
-            int rand;
+            int rand = new Random().nextInt(4);
             while(true)
             {
-                rand = new Random().nextInt(4);
-                if(rand!=0)break;
+                if(rand != 0) break;
                 else rand = new Random().nextInt(4);
             }
-            
+            System.out.println("Rand: "+rand);
             return rand;
         }        
         
