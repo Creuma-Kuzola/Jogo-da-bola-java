@@ -33,9 +33,13 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
     Thread thread;
     public AffineTransform atf ;
     private int angulo;
-    Ellipse2D circuloInterior;
     int diferX = 18, diferY=18;
-    private int xMovimentQuadrado = 300;
+    private int xMovimentQuadrado = 300,xMovimentCiruloPontos=300, xMovimentCiruloPosicao =300;
+    private int nextObstaculoCome = 450;
+    private int firstObstaculo;
+    private int secondObstaculo;
+    private int thirdObstaculo;
+    int rand,numObstaculos=3;
     
     // Getters e Setters  
     public int getAngulo() {
@@ -54,7 +58,57 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         this.xMovimentQuadrado = xMovimentQuadrado;
     }
 
-   //Construtor  
+    public int getNextObstaculoCome() {
+        return nextObstaculoCome;
+    }
+
+    public void setNextObstaculoCome(int nextObstaculoCome) {
+        this.nextObstaculoCome = nextObstaculoCome;
+    }
+
+    public int getFirstObstaculo() {
+        return firstObstaculo;
+    }
+
+    public void setFirstObstaculo(int firstObstaculo) {
+        this.firstObstaculo = firstObstaculo;
+    }
+
+    public int getSecondObstaculo() {
+        return secondObstaculo;
+    }
+
+    public void setSecondObstaculo(int secondObstaculo) {
+        this.secondObstaculo = secondObstaculo;
+    }
+
+    public int getThirdObstaculo() {
+        return thirdObstaculo;
+    }
+
+    public void setThirdObstaculo(int thirdObstaculo) {
+        this.thirdObstaculo = thirdObstaculo;
+    }
+
+     public int getxMovimentCiruloPontos() {
+        return xMovimentCiruloPontos;
+    }
+
+    public void setxMovimentCiruloPontos(int xMovimentCiruloPontos) {
+        this.xMovimentCiruloPontos = xMovimentCiruloPontos;
+    }
+
+    public int getxMovimentCiruloPosicao() {
+        return xMovimentCiruloPosicao;
+    }
+
+    public void setxMovimentCiruloPosicao(int xMovimentCiruloPosicao) {
+        this.xMovimentCiruloPosicao = xMovimentCiruloPosicao;
+    }
+
+
+  
+   //Constructor  
     public PainelJogoBola() {
       
         new Thread(this).start();
@@ -93,12 +147,17 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         g2d.setTransform(atf);
       
         
+        g2d.getTransform();
+        atf = new AffineTransform();
+        g2d.translate(xMovimentCiruloPontos,0);
+
         g2d.setPaint(Color.MAGENTA);
         g2d.fillOval(circuloPontos.getPosX(), circuloPontos.getPosY(), circuloPontos.getWidth(), circuloPontos.getHeight());
-        
+        g2d.setTransform(atf);
+        /*
         g2d.setPaint(new Color(37,153,179));     
         g2d.fillOval(circuloRecuarPosX.getPosX(),circuloRecuarPosX.getPosY(),circuloRecuarPosX.getWidth(),circuloRecuarPosX.getHeight());
-        
+        */
         
         g2d.getTransform();
         atf = new AffineTransform();
@@ -107,21 +166,15 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         g2d.setPaint(Color.RED);    
         g2d.fillRect(quadrado.getPosX(),quadrado.getPosY(),quadrado.getWidth(),quadrado.getHeight());
        
-         g2d.setTransform(atf);
+        g2d.setTransform(atf);
         
         g2d.setPaint(Color.YELLOW);
         g2d.fillOval(bolaPrincipal.getPosX(), bolaPrincipal.getPosY(), bolaPrincipal.getWidth(), bolaPrincipal.getHeight());
         
         }
-   
-        // Função responsável por posicionar o quadrado no jogo
-        public void posicionarQuadrado()
-        {
-           if(getxMovimentQuadrado() == -400)
-               setxMovimentQuadrado(300);
-        }        
     
-        //Função responsável por gerar a ordem em que obstáculos irão entrar
+    
+     //Função responsável por gerar a ordem em que os obstáculos irão entrar
         public int gerarOrdemDosObstaculos()
         {  
             int rand = new Random().nextInt(4);
@@ -132,17 +185,50 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
             }
             System.out.println("Rand: "+rand);
             return rand;
-        }        
-        
-        
-        public void ordemObstaculos()
+        } 
+   
+        // Função responsável por posicionar o quadrado no jogo
+        public void posicionarQuadrado()
         {
-            int rand = gerarOrdemDosObstaculos();
+           if(getxMovimentQuadrado() == -400)
+               setxMovimentQuadrado(300);
+        }    
+        
+       public void posicionarCirculoPontos()
+        {
+           if(getxMovimentCiruloPontos() == -400)
+               setxMovimentCiruloPontos(300);
+        }
+       
+       public void posicionarCirculoPosicao()
+        {
+           if(getxMovimentCiruloPosicao() == -400)
+               setxMovimentCiruloPosicao(300);
+        }
+        /*
+        public void posicionarObstaculos(){
+        
+            int rand;
             
+            rand = gerarOrdemDosObstaculos();
+            if(rand == 1)
+            {
+                setFirstObstaculo(1);
+                while(true)
+                {
+                    setxMovimentCiruloPontos(getxMovimentCiruloPontos()-5);
+                    if(getxMovimentCiruloPosicao() == -400)
+                        setxMovimentCiruloPosicao(300);
+                    System.out.println("Entrei");
+                }    
+                
+              
+            }
             
-                
-                
-        }        
+               
+        }*/
+    
+             
        //Função responsável por actualizar o teclado
       public void atualizar() {
 
@@ -151,7 +237,6 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
             bolaPrincipal.setPosY(bolaPrincipal.getPosY() - 2);
              //atf.rotate(Math.toRadians(angulo),bolaPrincipal.getPosX()+diferX,bolaPrincipal.getPosY()+diferY);
         }    
-            
         if (teclado.isBaixo()) 
             bolaPrincipal.setPosY(bolaPrincipal.getPosY() + 2);
         
@@ -170,16 +255,30 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
 
         try {
 
+            
             while (true) {
                 
-                this.gerarOrdemDosObstaculos();
-                this.posicionarQuadrado();
+              //  this.posicionarObstaculos();
+              if(numObstaculos > 4)
+              {    
+                rand = gerarOrdemDosObstaculos();
+                if(rand == 1)
+                {
+                    this.posicionarCirculoPontos();
+                    numObstaculos--;
+                }    
+                if(getxMovimentCiruloPontos() == 250)
+                    this.posicionarQuadrado();
+                setxMovimentQuadrado(getxMovimentQuadrado()-5);
+                
+              }
                 this.atualizar();
                 this.repaint();
                 Thread.sleep(13);
                 setAngulo(getAngulo()+1);
-                //System.out.println("xMovimentQuadrado: "+xMovimentQuadrado);
-                xMovimentQuadrado -= 5;
+                setxMovimentCiruloPontos(getxMovimentCiruloPontos()-5);
+                
+                
             }
 
         } catch (InterruptedException e) {
@@ -187,6 +286,5 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         }
     }
 
-
-
+       
 }
