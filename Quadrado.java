@@ -13,12 +13,15 @@ public class Quadrado {
     
     private int posX, posY;
     private int width, height;
-
-    public Quadrado(int posX, int posY, int width, int height) {
+    private int velocidadeX;
+    private int numObstaculo;
+    
+    public Quadrado(int posX, int posY, int width, int height,int numObstaculo) {
         this.posX = posX;
         this.posY = posY;
         this.width = width;
         this.height = height;
+        this.numObstaculo = numObstaculo;
     }
     public void setPosX(int posX) {
         this.posX = posX;
@@ -51,5 +54,20 @@ public class Quadrado {
     public int getHeight() {
         return height;
     }
+
+    public int getVelocidadeX() {
+        return velocidadeX;
+    }
+
+    public void setVelocidadeX(int velocidadeX) {
+        this.velocidadeX = velocidadeX;
+    }
     
+     public int getNumObstaculo() {
+        return numObstaculo;
+    }
+
+    public void setNumObstaculo(int numObstaculo) {
+        this.numObstaculo = numObstaculo;
+    }
 }
