@@ -4,13 +4,17 @@ public class Bola {
     
     private int posX, posY;
     private int width, height;
-
-    public Bola(int posX, int posY, int width, int height) {
+    private int numObstaculo;
+    private int velocidadeX;
+    
+    public Bola(int posX, int posY, int width, int height,int numObstaculo) {
         this.posX = posX;
         this.posY = posY;
         this.width = width;
         this.height = height;
+        this.numObstaculo = numObstaculo;
     }
+    
     public void setPosX(int posX) {
         this.posX = posX;
     }
@@ -42,4 +46,22 @@ public class Bola {
     public int getHeight() {
         return height;
     }
+
+    public int getNumObstaculo() {
+        return numObstaculo;
+    }
+
+    public void setNumObstaculo(int numObstaculo) {
+        this.numObstaculo = numObstaculo;
+    }
+    
+     public int getVelocidadeX() {
+        return velocidadeX;
+    }
+
+    public void setVelocidadeX(int velocidadeX) {
+        this.velocidadeX = velocidadeX;
+    }
+
+    
 }
