@@ -187,31 +187,22 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         g2d.setPaint(new Color(0, 0, 0));
         g2d.fillRect(0, 277, 770, 80);
 
-        atf = new AffineTransform();
-        g2d.getTransform();
-        
-        g2d.translate(bolaPrincipal.getPosX(), bolaPrincipal.getPosY());
-        g2d.setTransform(atf);
-      
         // Circulo Pontos(Magenta)
-        g2d.getTransform();
-        atf = new AffineTransform();
+        atf = g2d.getTransform();
         g2d.translate(xMovimentCiruloPontos,0);
 
         g2d.setPaint(Color.MAGENTA);
         g2d.fillOval(circuloPontos.getPosX(), circuloPontos.getPosY(), circuloPontos.getWidth(), circuloPontos.getHeight());
         g2d.setTransform(atf);
         
-        g2d.getTransform();
-        atf = new AffineTransform();
+        atf = g2d.getTransform();
         g2d.translate(xMovimentCiruloPosicao,0);
         
         g2d.setPaint(new Color(37,153,179));     
         g2d.fillOval(circuloRecuarPosX.getPosX(),circuloRecuarPosX.getPosY(),circuloRecuarPosX.getWidth(),circuloRecuarPosX.getHeight());
         g2d.setTransform(atf);
         
-        g2d.getTransform();
-        atf = new AffineTransform();
+        atf = g2d.getTransform();
         g2d.translate(xMovimentQuadrado,0);
         
         g2d.setPaint(Color.RED);    
@@ -221,7 +212,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         
         g2d.setPaint(Color.YELLOW);
         g2d.fillOval(bolaPrincipal.getPosX(), bolaPrincipal.getPosY(), bolaPrincipal.getWidth(), bolaPrincipal.getHeight());
-        
+       
         }
    
      //Função responsável por gerar a ordem em que os obstáculos irão entrar
@@ -237,6 +228,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
             return rand;
         } 
    
+
         // Função responsável por posicionar o quadrado no jogo
         public void posicionarQuadrado()
         {
@@ -272,48 +264,6 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
        
     }
       
-    public void redesenharQuadrado(int posX)
-    {
-         //System.out.println("Entrei");
-         g2d.getTransform();
-         g2d.setPaint(Color.MAGENTA);  
-         g2d.translate(xMoviment1,0);
-         g2d.fillOval(posX, 290,40, 40);
-         g2d.getTransform();
-    }
-    
-   /*   
-    public void obstaculosJogo(Graphics2D g2d, int xPos,int cod)
-    {
-       
-        if(cod == 1)
-        {  
-           System.out.println("Entrei");
-           g2d.setPaint(Color.MAGENTA);  
-           g2d.translate(xMoviment1,0);
-           g2d.fillOval(xMoviment1, circuloPontos.getPosY(), circuloPontos.getWidth(), circuloPontos.getHeight());
-        }  
-        else if(cod == 2)
-        {      
-            g2d.setPaint(Color.RED);
-            g2d.translate(xMovimentQuadrado,0);
-            g2d.fillRect(xPos, quadrado.getPosY(), quadrado.getWidth(), quadrado.getHeight());
-        }   
-        else
-        {  
-           g2d.setPaint(new Color(37,153,179));     
-           g2d.translate(xMovimentCiruloPosicao,0);
-           g2d.fillOval(xPos, circuloRecuarPosX.getPosY(), circuloRecuarPosX.getWidth(), circuloRecuarPosX.getHeight());
-        }  
-       
-        g2d.getTransform();
-    }        
-*/
-    public void desenharMesmoObjectoPosDiferente(Graphics2D g2d)
-    {
-        paintComponent(g2d);
-        
-    }        
     
     @Override
     public void actionPerformed(ActionEvent arg0) {
@@ -404,77 +354,11 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
                         setxMovimentCiruloPosicao(getxMovimentCiruloPosicao()-4);
                     
                    }
-                  else 
-                  {
-                      if(i4 == 1)
-                      {
-                          redesenharQuadrado(400);
-                          i--;
-                      }    
-                        
-                      //setxMovimentCiruloPontos(getxMovimentCiruloPontos()-5);
-                      xMoviment1 -=10;
-                  }   
-              
-              
+                               
               }    
               
             }   
-              /*
-                else if(firstObstaculo == 2)
-                {
-                  if(getxMovimentQuadrado() == 252)
-                    if(secondObstaculo == 2)
-                    {   setFlagObst2(true);
-                        numObstaculos--;
-                    }
-                  setxMovimentQuadrado(getxMovimentQuadrado()-4);
-                }    
-                else
-                {
-                   setxMovimentCiruloPosicao(getxMovimentCiruloPosicao()-4);
-                
-                }
-               /*case 1:
-                        
-                        
-                        break;
-                    case 2:
-                        setFlagObst1(true);
-                        numObstaculos--;
-                        break;
-                    default:
-                        setFlagObst1(true);
-                        numObstaculos--;
-                        break;*/  
-                    
-              /*if(flagObst1 == true)
-              { 
-                  
-                  
-                  if(getxMovimentCiruloPontos() == 250)
-                    if(secondObstaculo == 2)
-                    {   setFlagObst2(true);
-                        numObstaculos--;
-                    }
-                  setxMovimentCiruloPontos(getxMovimentCiruloPontos()-5); 
-              } 
-               
-              if(flagObst2 == true)
-              {
-                if(getxMovimentCiruloPosicao()== 252)
-                  if(thirdObstaculo == 3)    
-                    flagObst3 = true;
-                setxMovimentCiruloPosicao(getxMovimentCiruloPosicao()-4);
-                
-              }  
-                
-              if(flagObst3 == true)
-                  setxMovimentQuadrado(getxMovimentQuadrado()-4);*/
-                
-            /*} */
-              
-            
+
              
             this.atualizar();
             this.repaint();
