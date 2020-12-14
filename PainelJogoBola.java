@@ -276,7 +276,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         try {
   
             firstObstaculo = 1;
-            secondObstaculo = 1;
+            secondObstaculo = 2;
             thirdObstaculo = 3;
               
           while (true) 
@@ -305,14 +305,10 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
                         flagObst2 = true;
                         circuloRecuarPosX.setObstaculoActivo(true);
                     }
-                    else 
-                    {
-                        flagObst2 = true;
-                        circuloPontos.setObstaculoActivo(true);
-                    }
-                    
+
                  }
-                  setxMovimentCiruloPontos(getxMovimentCiruloPontos()-5);
+                 
+                 setxMovimentCiruloPontos(getxMovimentCiruloPontos()-5);
                   
                 }
               
@@ -328,15 +324,15 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
                     
                         if(getxMovimentQuadrado() == 252)
                         { 
-                            if(secondObstaculo == 2)
+                            if(thirdObstaculo == 3)
                             {  
-                                flagObst2 = true;
+                                flagObst3 = true;
                                 quadrado.setObstaculoActivo(true);
                             }
-                            else if(secondObstaculo == 3)
+                            else if(thirdObstaculo == 2)
                             {    
-                                    flagObst2 = true;
-                                    circuloRecuarPosX.setObstaculoActivo(true);
+                                flagObst3 = true;
+                                circuloRecuarPosX.setObstaculoActivo(true);
                             }  
                         }
 
@@ -350,11 +346,50 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
                            setxMovimentCiruloPosicao(350);
                            i3--;
                         }    
+                        
+                        if(getxMovimentQuadrado() == 252)
+                        { 
+                            if(thirdObstaculo == 2)
+                            {  
+                                flagObst3 = true;
+                                quadrado.setObstaculoActivo(true);
+                            }
+                            else if(thirdObstaculo == 1)
+                            {    
+                                flagObst3 = true;
+                                circuloPontos.setObstaculoActivo(true);
+                            }  
+                        }
 
                         setxMovimentCiruloPosicao(getxMovimentCiruloPosicao()-4);
                     
                    }
                                
+              }  
+              
+              i3 = i2=1;
+              if(flagObst3)
+              {
+                  
+                  if(quadrado.isObstaculoActivo())
+                  {
+                      if(i2==1)
+                        {
+                           setxMovimentQuadrado(350);
+                           i2--;
+                        }
+                      setxMovimentQuadrado(getxMovimentCiruloPosicao()-4);
+                  }
+                  else if(circuloPontos.isObstaculoActivo())
+                  {
+                      if(i3==1)
+                        {
+                           setxMovimentCiruloPontos(350);
+                           i3--;
+                        }
+                      setxMovimentCiruloPontos(getxMovimentCiruloPontos()-4);
+                  }    
+                  
               }    
               
             }   
