@@ -25,12 +25,12 @@ import java.util.Random;
  */
 public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
 
+    // Declaração de variáveis
     Bola bolaPrincipal,circuloPontos,circuloRecuarPosX;
     Quadrado quadrado;
     Teclado teclado = new Teclado();
     Thread thread;
-    public AffineTransform atf ;
-    private int angulo;
+    public AffineTransform atf;
     int diferX = 18, diferY=18;
     // 900 para que fique já do lado direito e faça a translação de forma smooth (suave)
     private int xMovimentQuadrado = 300,xMovimentCiruloPontos= 300, xMovimentCiruloPosicao = 300;
@@ -39,21 +39,12 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
     private int firstObstaculo;
     private int secondObstaculo;
     private int thirdObstaculo;
-    int rand,numObstaculos=3;
+    int numObstaculos=3;
     private boolean flagObst1,flagObst2, flagObst3;
-    private boolean quadr,circPos, circPont;
-    int i=1,i2=1,i3=1,i4=1;
-    Graphics2D g2d;
     public int xMoviment1 = 400;
-    // Getters e Setters  
-    public int getAngulo() {
-        return angulo;
-    }
-
-    public void setAngulo(int angulo) {
-        this.angulo = angulo;
-    }
     
+    
+    // Getters e Setters  
     public int getxMovimentQuadrado() {
         return xMovimentQuadrado;
     }
@@ -134,30 +125,6 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         this.flagObst3 = flagObst3;
     }
 
-       public boolean isQuadr() {
-        return quadr;
-    }
-
-    public void setQuadr(boolean quadr) {
-        this.quadr = quadr;
-    }
-
-    public boolean isCircPos() {
-        return circPos;
-    }
-
-    public void setCircPos(boolean circPos) {
-        this.circPos = circPos;
-    }
-
-    public boolean isCircPont() {
-        return circPont;
-    }
-
-    public void setCircPont(boolean circPont) {
-        this.circPont = circPont;
-    }
-  
    //Constructor  
     public PainelJogoBola() {
       
@@ -282,7 +249,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
           while (true) 
           {    
               
-            if(numObstaculos != 0)
+            /*if(numObstaculos != 0)
             { 
              
               if(firstObstaculo == 1 )
@@ -329,11 +296,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
                                 flagObst3 = true;
                                 quadrado.setObstaculoActivo(true);
                             }
-                            else if(thirdObstaculo == 2)
-                            {    
-                                flagObst3 = true;
-                                circuloRecuarPosX.setObstaculoActivo(true);
-                            }  
+                           
                         }
 
                     setxMovimentQuadrado(getxMovimentQuadrado()-4);
@@ -393,7 +356,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
               }    
               
             }   
-
+*/
              
             this.atualizar();
             this.repaint();
