@@ -26,16 +26,13 @@ import java.util.Random;
 public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
 
     // Declaração de variáveis
+    
     Bola bolaPrincipal,circuloPontos,circuloRecuarPosX;
     Quadrado quadrado;
     Teclado teclado = new Teclado();
     Thread thread;
     public AffineTransform atf;
-    int diferX = 18, diferY=18;
-    // 900 para que fique já do lado direito e faça a translação de forma smooth (suave)
-    private int xMovimentQuadrado = 300,xMovimentCiruloPontos= 300, xMovimentCiruloPosicao = 300;
-   // private int xMovimentQuadrado = 500,xMovimentCiruloPontos=300, xMovimentCiruloPosicao =500;
-    private int nextObstaculoCome = 450;
+    private int xMovimentQuadrado = 300,xMovimentCirculoPontos= 300, xMovimentCiruloPosicao = 300;
     private int firstObstaculo;
     private int secondObstaculo;
     private int thirdObstaculo;
@@ -52,15 +49,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
     public void setxMovimentQuadrado(int xMovimentQuadrado) {
         this.xMovimentQuadrado = xMovimentQuadrado;
     }
-
-    public int getNextObstaculoCome() {
-        return nextObstaculoCome;
-    }
-
-    public void setNextObstaculoCome(int nextObstaculoCome) {
-        this.nextObstaculoCome = nextObstaculoCome;
-    }
-
+    
     public int getFirstObstaculo() {
         return firstObstaculo;
     }
@@ -85,12 +74,12 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         this.thirdObstaculo = thirdObstaculo;
     }
 
-     public int getxMovimentCiruloPontos() {
-        return xMovimentCiruloPontos;
+     public int getxMovimentCirculoPontos() {
+        return xMovimentCirculoPontos;
     }
 
-    public void setxMovimentCiruloPontos(int xMovimentCiruloPontos) {
-        this.xMovimentCiruloPontos = xMovimentCiruloPontos;
+    public void setxMovimentCiruloPontos(int xMovimentCirculoPontos) {
+        this.xMovimentCirculoPontos = xMovimentCirculoPontos;
     }
 
     public int getxMovimentCiruloPosicao() {
@@ -125,6 +114,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         this.flagObst3 = flagObst3;
     }
 
+    
    //Constructor  
     public PainelJogoBola() {
       
@@ -144,7 +134,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
     public void paintComponent(Graphics g) {
 
         super.paintComponent(g);
-        g2d = (Graphics2D) g;
+        Graphics2D g2d = (Graphics2D) g;
         this.setBackground(Color.WHITE);
         
         // Anti-aliasing
@@ -156,27 +146,26 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
 
         // Circulo Pontos(Magenta)
         atf = g2d.getTransform();
-        g2d.translate(xMovimentCiruloPontos,0);
-
+        g2d.translate(xMovimentCirculoPontos,0);
         g2d.setPaint(Color.MAGENTA);
         g2d.fillOval(circuloPontos.getPosX(), circuloPontos.getPosY(), circuloPontos.getWidth(), circuloPontos.getHeight());
         g2d.setTransform(atf);
         
+        // Circulo Recuar -10 na Posição(Azul)
         atf = g2d.getTransform();
         g2d.translate(xMovimentCiruloPosicao,0);
-        
         g2d.setPaint(new Color(37,153,179));     
         g2d.fillOval(circuloRecuarPosX.getPosX(),circuloRecuarPosX.getPosY(),circuloRecuarPosX.getWidth(),circuloRecuarPosX.getHeight());
         g2d.setTransform(atf);
         
+        //Quadrado vermelho de fim-de-jogo
         atf = g2d.getTransform();
         g2d.translate(xMovimentQuadrado,0);
-        
         g2d.setPaint(Color.RED);    
         g2d.fillRect(quadrado.getPosX(),quadrado.getPosY(),quadrado.getWidth(),quadrado.getHeight());
-       
         g2d.setTransform(atf);
         
+        //Bola principal dp jogo(amarela)
         g2d.setPaint(Color.YELLOW);
         g2d.fillOval(bolaPrincipal.getPosX(), bolaPrincipal.getPosY(), bolaPrincipal.getWidth(), bolaPrincipal.getHeight());
        
