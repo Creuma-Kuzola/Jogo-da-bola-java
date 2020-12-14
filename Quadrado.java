@@ -15,6 +15,7 @@ public class Quadrado {
     private int width, height;
     private int velocidadeX;
     private int numObstaculo;
+    private int xMovimentAntecessor;
     
     public Quadrado(int posX, int posY, int width, int height,int numObstaculo) {
         this.posX = posX;
@@ -69,5 +70,13 @@ public class Quadrado {
 
     public void setNumObstaculo(int numObstaculo) {
         this.numObstaculo = numObstaculo;
+    }
+    
+    public int getxMovimentAntecessor() {
+        return xMovimentAntecessor;
+    }
+
+    public void setxMovimentAntecessor(int xMovimentAntecessor) {
+        this.xMovimentAntecessor = xMovimentAntecessor;
     }
 }

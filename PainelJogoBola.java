@@ -34,12 +34,14 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
     public AffineTransform atf ;
     private int angulo;
     int diferX = 18, diferY=18;
-    private int xMovimentQuadrado = 300,xMovimentCiruloPontos=300, xMovimentCiruloPosicao =300;
+    private int xMovimentQuadrado = 500,xMovimentCiruloPontos=300, xMovimentCiruloPosicao =500;
     private int nextObstaculoCome = 450;
     private int firstObstaculo;
     private int secondObstaculo;
     private int thirdObstaculo;
     int rand,numObstaculos=3;
+    private boolean flagObst1,flagObst2, flagObst3;
+    int i=1;
     
     // Getters e Setters  
     public int getAngulo() {
@@ -106,7 +108,31 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         this.xMovimentCiruloPosicao = xMovimentCiruloPosicao;
     }
 
+        public boolean isFlagObst1() {
+        return flagObst1;
+    }
 
+    public void setFlagObst1(boolean flagObst1) {
+        this.flagObst1 = flagObst1;
+    }
+
+    public boolean isFlagObst2() {
+        return flagObst2;
+    }
+
+    public void setFlagObst2(boolean flagObst2) {
+        this.flagObst2 = flagObst2;
+    }
+
+    public boolean isFlagObst3() {
+        return flagObst3;
+    }
+
+    public void setFlagObst3(boolean flagObst3) {
+        this.flagObst3 = flagObst3;
+    }
+
+      
   
    //Constructor  
     public PainelJogoBola() {
@@ -116,7 +142,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         bolaPrincipal = new Bola(20, 290, 40, 40,0);
         circuloPontos = new Bola(450,290,40,40,1);
         quadrado = new Quadrado(300,290,40,40,2);
-        circuloRecuarPosX = new Bola(180,290,40,40,3);
+        circuloRecuarPosX = new Bola(300,290,40,40,3);
         
         this.setFocusable(true);
         addKeyListener(teclado);
@@ -141,12 +167,9 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         g2d.getTransform();
         
         g2d.translate(bolaPrincipal.getPosX(), bolaPrincipal.getPosY());
-        //atf.rotate(Math.toRadians(angulo),38,308);
-       // g2d.rotate(Math.toRadians(angulo),, ERROR);
-       
         g2d.setTransform(atf);
       
-        
+        // Circulo Pontos(Magenta)
         g2d.getTransform();
         atf = new AffineTransform();
         g2d.translate(xMovimentCiruloPontos,0);
@@ -154,10 +177,14 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         g2d.setPaint(Color.MAGENTA);
         g2d.fillOval(circuloPontos.getPosX(), circuloPontos.getPosY(), circuloPontos.getWidth(), circuloPontos.getHeight());
         g2d.setTransform(atf);
-        /*
+        
+        g2d.getTransform();
+        atf = new AffineTransform();
+        g2d.translate(xMovimentCiruloPosicao,0);
+        
         g2d.setPaint(new Color(37,153,179));     
         g2d.fillOval(circuloRecuarPosX.getPosX(),circuloRecuarPosX.getPosY(),circuloRecuarPosX.getWidth(),circuloRecuarPosX.getHeight());
-        */
+        g2d.setTransform(atf);
         
         g2d.getTransform();
         atf = new AffineTransform();
@@ -183,7 +210,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
                 if(rand != 0) break;
                 else rand = new Random().nextInt(4);
             }
-            System.out.println("Rand: "+rand);
+           
             return rand;
         } 
    
@@ -205,30 +232,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
            if(getxMovimentCiruloPosicao() == -400)
                setxMovimentCiruloPosicao(300);
         }
-        /*
-        public void posicionarObstaculos(){
-        
-            int rand;
-            
-            rand = gerarOrdemDosObstaculos();
-            if(rand == 1)
-            {
-                setFirstObstaculo(1);
-                while(true)
-                {
-                    setxMovimentCiruloPontos(getxMovimentCiruloPontos()-5);
-                    if(getxMovimentCiruloPosicao() == -400)
-                        setxMovimentCiruloPosicao(300);
-                    System.out.println("Entrei");
-                }    
-                
-              
-            }
-            
-               
-        }*/
-    
-             
+         
        //Função responsável por actualizar o teclado
       public void atualizar() {
 
@@ -254,31 +258,44 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
     public void run() {
 
         try {
-
-            
-            while (true) {
-                
-              //  this.posicionarObstaculos();
-              if(numObstaculos > 4)
+  
+              firstObstaculo = 1;
+              secondObstaculo = 2;
+              thirdObstaculo = 3;
+              System.out.println("fist: "+firstObstaculo+"sec: "+secondObstaculo+"thir: "+thirdObstaculo);
+              
+             while (true) {
+             
+              if(numObstaculos != 0)
               {    
-                rand = gerarOrdemDosObstaculos();
-                if(rand == 1)
-                {
-                    this.posicionarCirculoPontos();
-                    numObstaculos--;
-                }    
-                if(getxMovimentCiruloPontos() == 250)
-                    this.posicionarQuadrado();
-                setxMovimentQuadrado(getxMovimentQuadrado()-5);
-                
+               rand = gerarOrdemDosObstaculos();
+                if(firstObstaculo == 1)
+                    setFlagObst1(true);
               }
-                this.atualizar();
-                this.repaint();
-                Thread.sleep(13);
-                setAngulo(getAngulo()+1);
-                setxMovimentCiruloPontos(getxMovimentCiruloPontos()-5);
+              
+              if(flagObst1 == true)
+              { 
+                  if(getxMovimentCiruloPontos() == 250)
+                    if(secondObstaculo == 2)
+                        setFlagObst2(true);
+                  setxMovimentCiruloPontos(getxMovimentCiruloPontos()-5);
+              } 
+               
+              if(flagObst2 == true)
+              {
+                if(getxMovimentCiruloPosicao()== 252)
+                  if(thirdObstaculo == 3)    
+                    flagObst3 = true;
+                setxMovimentCiruloPosicao(getxMovimentCiruloPosicao()-4);
+              }  
                 
-                
+              if(flagObst3 == true)
+                  setxMovimentQuadrado(getxMovimentQuadrado()-5);
+                  
+              this.atualizar();
+              this.repaint();
+              Thread.sleep(13);
+
             }
 
         } catch (InterruptedException e) {
@@ -286,5 +303,5 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         }
     }
 
-       
+ 
 }

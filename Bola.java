@@ -6,6 +6,7 @@ public class Bola {
     private int width, height;
     private int numObstaculo;
     private int velocidadeX;
+    private int xMovimentAntecessor;
     
     public Bola(int posX, int posY, int width, int height,int numObstaculo) {
         this.posX = posX;
@@ -63,5 +64,14 @@ public class Bola {
         this.velocidadeX = velocidadeX;
     }
 
+    public int getxMovimentAntecessor() {
+        return xMovimentAntecessor;
+    }
+
+    public void setxMovimentAntecessor(int xMovimentAntecessor) {
+        this.xMovimentAntecessor = xMovimentAntecessor;
+    }
+
+    
     
 }
