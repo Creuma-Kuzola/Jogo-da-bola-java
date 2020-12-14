@@ -7,6 +7,7 @@ public class Bola {
     private int numObstaculo;
     private int velocidadeX;
     private int xMovimentAntecessor;
+    private boolean obstaculoActivo;
     
     public Bola(int posX, int posY, int width, int height,int numObstaculo) {
         this.posX = posX;
@@ -70,6 +71,14 @@ public class Bola {
 
     public void setxMovimentAntecessor(int xMovimentAntecessor) {
         this.xMovimentAntecessor = xMovimentAntecessor;
+    }
+
+    public boolean isObstaculoActivo() {
+        return obstaculoActivo;
+    }
+
+    public void setObstaculoActivo(boolean obstaculoActivo) {
+        this.obstaculoActivo = obstaculoActivo;
     }
 
     

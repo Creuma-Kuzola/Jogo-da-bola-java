@@ -16,6 +16,7 @@ public class Quadrado {
     private int velocidadeX;
     private int numObstaculo;
     private int xMovimentAntecessor;
+    private boolean obstaculoActivo;
     
     public Quadrado(int posX, int posY, int width, int height,int numObstaculo) {
         this.posX = posX;
@@ -79,4 +80,14 @@ public class Quadrado {
     public void setxMovimentAntecessor(int xMovimentAntecessor) {
         this.xMovimentAntecessor = xMovimentAntecessor;
     }
+
+    public boolean isObstaculoActivo() {
+        return obstaculoActivo;
+    }
+
+    public void setObstaculoActivo(boolean obstaculoActivo) {
+        this.obstaculoActivo = obstaculoActivo;
+    }
+    
+    
 }
