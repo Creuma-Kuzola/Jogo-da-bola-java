@@ -4,19 +4,14 @@ package JogoBola;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
 import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.GeneralPath;
 import java.util.Random;
 
 /**
@@ -25,14 +20,14 @@ import java.util.Random;
  */
 public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
 
-    // Declaração de variáveis
     
+    //Bloco de declaração de variáveis
     Bola bolaPrincipal,circuloPontos,circuloRecuarPosX;
     Quadrado quadrado;
     Teclado teclado = new Teclado();
     Thread thread;
     public AffineTransform atf;
-    private int xMovimentQuadrado = 300,xMovimentCirculoPontos= 300, xMovimentCiruloPosicao = 300;
+    private int xMovimentQuadrado = 300,xMovimentCirculoPontos= 300, xMovimentCirculoPosicao = 300;
     private int firstObstaculo;
     private int secondObstaculo;
     private int thirdObstaculo;
@@ -41,7 +36,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
     public int xMoviment1 = 400;
     
     
-    // Getters e Setters  
+    //Métodos Getters e Setters  
     public int getxMovimentQuadrado() {
         return xMovimentQuadrado;
     }
@@ -83,11 +78,11 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
     }
 
     public int getxMovimentCiruloPosicao() {
-        return xMovimentCiruloPosicao;
+        return xMovimentCirculoPosicao;
     }
 
     public void setxMovimentCiruloPosicao(int xMovimentCiruloPosicao) {
-        this.xMovimentCiruloPosicao = xMovimentCiruloPosicao;
+        this.xMovimentCirculoPosicao = xMovimentCiruloPosicao;
     }
 
         public boolean isFlagObst1() {
@@ -115,7 +110,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
     }
 
     
-   //Constructor  
+   //Constructor da classe
     public PainelJogoBola() {
       
         new Thread(this).start();
@@ -153,7 +148,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         
         // Circulo Recuar -10 na Posição(Azul)
         atf = g2d.getTransform();
-        g2d.translate(xMovimentCiruloPosicao,0);
+        g2d.translate(xMovimentCirculoPosicao,0);
         g2d.setPaint(new Color(37,153,179));     
         g2d.fillOval(circuloRecuarPosX.getPosX(),circuloRecuarPosX.getPosY(),circuloRecuarPosX.getWidth(),circuloRecuarPosX.getHeight());
         g2d.setTransform(atf);
@@ -172,15 +167,22 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         }
    
      //Função responsável por gerar a ordem em que os obstáculos irão entrar
-        public int gerarOrdemDosObstaculos()
+        public int gerarOrdemDosObstaculos(int antRand, boolean firstObstacle,int antRand1,boolean lastObs)
         {  
+            
             int rand = new Random().nextInt(4);
             while(true)
             {
-                if(rand != 0) break;
+                if(firstObstacle && rand != 0 && lastObs==false) break;
+                if(rand != 0 && rand!= antRand && lastObs==false)break;
                 else rand = new Random().nextInt(4);
+                
+                if(rand != 0 && rand!= antRand && rand != antRand1 && lastObs==true)
+                    break;
+                else rand = new Random().nextInt(4);
+            
             }
-           
+            
             return rand;
         } 
    
@@ -192,12 +194,14 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
                setxMovimentQuadrado(300);
         }    
         
+        // Função responsável por posicionar o circulo pontos no jogo
        public void posicionarCirculoPontos()
         {
-           if(getxMovimentCiruloPontos() == -400)
+           if(getxMovimentCirculoPontos() == -400)
                setxMovimentCiruloPontos(300);
         }
        
+       // Função responsável por posicionar o circulo posição no jogo
        public void posicionarCirculoPosicao()
         {
            if(getxMovimentCiruloPosicao() == -400)
@@ -208,10 +212,8 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
       public void atualizar() {
 
         if (teclado.isCima()) 
-        {
             bolaPrincipal.setPosY(bolaPrincipal.getPosY() - 2);
-             //atf.rotate(Math.toRadians(angulo),bolaPrincipal.getPosX()+diferX,bolaPrincipal.getPosY()+diferY);
-        }    
+              
         if (teclado.isBaixo()) 
             bolaPrincipal.setPosY(bolaPrincipal.getPosY() + 2);
         
@@ -220,21 +222,25 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
        
     }
       
-    
+    // Função da interface ActionListener
     @Override
     public void actionPerformed(ActionEvent arg0) {
 
     }
 
+    // Função responsável por fazer o código rodar
     @Override
     public void run() {
 
         try {
   
-            firstObstaculo = 1;
+            /*firstObstaculo = 1;
             secondObstaculo = 2;
-            thirdObstaculo = 3;
-              
+            thirdObstaculo = 3;*/
+            int obs1 ;
+            int obs2,obs3;
+            
+            
           while (true) 
           {    
               
@@ -344,9 +350,15 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
                   
               }    
               
-            }   
-*/
+            }   */
              
+             
+             obs1 = gerarOrdemDosObstaculos(0,true,0,false);
+             System.out.println("Obs1: "+obs1); 
+             obs2 = gerarOrdemDosObstaculos(obs1,false,0,false);
+             System.out.println("Obs2: "+obs2); 
+             obs3 = gerarOrdemDosObstaculos(obs1,false,obs1,true);
+             System.out.println("Obs3: "+obs3 + "\n"); 
             this.atualizar();
             this.repaint();
             Thread.sleep(13);
