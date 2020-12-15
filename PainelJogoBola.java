@@ -34,7 +34,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
     int numObstaculos=3;
     private boolean flagObst1,flagObst2, flagObst3;
     public int xMoviment1 = 400;
-    
+    int i=1, i2=1,i3=1;
     
     //Métodos Getters e Setters  
     public int getxMovimentQuadrado() {
@@ -177,8 +177,9 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
                 if(rand != 0 && rand!= antRand && lastObs==false)break;
                 else rand = new Random().nextInt(4);
                 
-                if(rand != 0 && rand!= antRand && rand != antRand1 && lastObs==true)
-                    break;
+                if(rand != 0 && rand!= antRand1 && lastObs==true)
+                    if(rand != antRand)
+                        break;
                 else rand = new Random().nextInt(4);
             
             }
@@ -227,6 +228,95 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
     public void actionPerformed(ActionEvent arg0) {
 
     }
+    
+    public void posicionarFirsObs(int first)
+    {
+    
+        if(firstObstaculo == 1 )
+        {
+            if(i==1)
+            {
+                setxMovimentCiruloPontos(300);
+                i--;
+            }
+                 
+            if(getxMovimentCirculoPontos() == 250)
+            {  
+                if(secondObstaculo == 2)
+                {  
+                    flagObst2 = true;
+                    quadrado.setObstaculoActivo(true);
+                }
+                    
+                else if(secondObstaculo == 3)
+                {    
+                    flagObst2 = true;
+                   circuloRecuarPosX.setObstaculoActivo(true);
+                }
+
+            }
+                 
+            setxMovimentCiruloPontos(getxMovimentCirculoPontos()-5);
+                  
+          }
+    }
+    
+    public void verificarNextObs2(boolean flagObst2)
+    {
+        if(flagObst2)
+        {
+            if(quadrado.isObstaculoActivo())
+            {    
+                if(i2==1)
+                {
+                    setxMovimentQuadrado(350);
+                    i2--;
+                } 
+                    
+                if(getxMovimentQuadrado() == 252)
+                { 
+                    if(thirdObstaculo == 3)
+                    {  
+                        flagObst3 = true;
+                        quadrado.setObstaculoActivo(true);
+                    }
+                           
+                }
+
+                setxMovimentQuadrado(getxMovimentQuadrado()-4);
+                    
+            }  
+            else if(circuloRecuarPosX.isObstaculoActivo())
+            {
+                if(i3==1)
+                {
+                    setxMovimentCiruloPosicao(350);
+                    i3--;
+                }    
+                        
+                if(getxMovimentQuadrado() == 252)
+                { 
+                    if(thirdObstaculo == 2)
+                    {  
+                        flagObst3 = true;
+                        quadrado.setObstaculoActivo(true);
+                    }
+                   else if(thirdObstaculo == 1)
+                   {    
+                        flagObst3 = true;
+                        circuloPontos.setObstaculoActivo(true);
+                   }  
+                    
+                }
+
+                setxMovimentCiruloPosicao(getxMovimentCiruloPosicao()-4);
+                    
+            }
+                               
+       }  
+    
+    
+    }        
 
     // Função responsável por fazer o código rodar
     @Override
@@ -234,97 +324,16 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
 
         try {
   
-            /*firstObstaculo = 1;
+            firstObstaculo = 1;
             secondObstaculo = 2;
-            thirdObstaculo = 3;*/
-            int obs1 ;
-            int obs2,obs3;
-            
+            thirdObstaculo = 3;
+
             
           while (true) 
           {    
-              
-            /*if(numObstaculos != 0)
-            { 
-             
-              if(firstObstaculo == 1 )
-              {
-                 if(i==1)
-                 {
-                     setxMovimentCiruloPontos(300);
-                     i--;
-                 }
-                 
-                 if(getxMovimentCiruloPontos() == 250)
-                 {  
-                    if(secondObstaculo == 2)
-                    {  
-                        flagObst2 = true;
-                        quadrado.setObstaculoActivo(true);
-                    }
-                    else if(secondObstaculo == 3)
-                    {    
-                        flagObst2 = true;
-                        circuloRecuarPosX.setObstaculoActivo(true);
-                    }
-
-                 }
-                 
-                 setxMovimentCiruloPontos(getxMovimentCiruloPontos()-5);
-                  
-                }
-              
-              if(flagObst2)
-              {
-                  if(quadrado.isObstaculoActivo())
-                  {    
-                        if(i2==1)
-                        {
-                           setxMovimentQuadrado(350);
-                           i2--;
-                        } 
-                    
-                        if(getxMovimentQuadrado() == 252)
-                        { 
-                            if(thirdObstaculo == 3)
-                            {  
-                                flagObst3 = true;
-                                quadrado.setObstaculoActivo(true);
-                            }
-                           
-                        }
-
-                    setxMovimentQuadrado(getxMovimentQuadrado()-4);
-                    
-                  }  
-                  else if(circuloRecuarPosX.isObstaculoActivo())
-                  {
-                        if(i3==1)
-                        {
-                           setxMovimentCiruloPosicao(350);
-                           i3--;
-                        }    
-                        
-                        if(getxMovimentQuadrado() == 252)
-                        { 
-                            if(thirdObstaculo == 2)
-                            {  
-                                flagObst3 = true;
-                                quadrado.setObstaculoActivo(true);
-                            }
-                            else if(thirdObstaculo == 1)
-                            {    
-                                flagObst3 = true;
-                                circuloPontos.setObstaculoActivo(true);
-                            }  
-                        }
-
-                        setxMovimentCiruloPosicao(getxMovimentCiruloPosicao()-4);
-                    
-                   }
-                               
-              }  
-              
+              posicionarFirsObs(firstObstaculo);
+              verificarNextObs2(flagObst2);
+                          
               i3 = i2=1;
               if(flagObst3)
               {
@@ -345,20 +354,12 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
                            setxMovimentCiruloPontos(350);
                            i3--;
                         }
-                      setxMovimentCiruloPontos(getxMovimentCiruloPontos()-4);
+                      setxMovimentCiruloPontos(getxMovimentCirculoPontos()-4);
                   }    
                   
               }    
               
-            }   */
-             
-             
-             obs1 = gerarOrdemDosObstaculos(0,true,0,false);
-             System.out.println("Obs1: "+obs1); 
-             obs2 = gerarOrdemDosObstaculos(obs1,false,0,false);
-             System.out.println("Obs2: "+obs2); 
-             obs3 = gerarOrdemDosObstaculos(obs1,false,obs1,true);
-             System.out.println("Obs3: "+obs3 + "\n"); 
+              
             this.atualizar();
             this.repaint();
             Thread.sleep(13);
