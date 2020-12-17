@@ -29,17 +29,11 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
     Thread thread;
     public AffineTransform atf;
     private int xMovimentQuadrado = 2,xMovimentCirculoPontos=2, xMovimentCirculoPosicao = 2;
-    private int firstObstaculo=0;
-    private int secondObstaculo=0;
-    private int thirdObstaculo=0;
-    int numObstaculos=3;
     private boolean flagObst1=false,flagObst2=false, flagObst3=false;
     boolean flagColidiuPontos = false, flagColidiuRecuar = false, flagColidiuQuadrado = false;
     boolean gameOverFlag=false;
     int pontos;
     int posInicial=0;
-    int countTimesObstacule = 3;
-    boolean velTime = false;
     int x = 0;
     
     //Métodos Getters e Setters  
@@ -51,31 +45,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         this.xMovimentQuadrado = xMovimentQuadrado;
     }
     
-    public int getFirstObstaculo() {
-        return firstObstaculo;
-    }
-
-    public void setFirstObstaculo(int firstObstaculo) {
-        this.firstObstaculo = firstObstaculo;
-    }
-
-    public int getSecondObstaculo() {
-        return secondObstaculo;
-    }
-
-    public void setSecondObstaculo(int secondObstaculo) {
-        this.secondObstaculo = secondObstaculo;
-    }
-
-    public int getThirdObstaculo() {
-        return thirdObstaculo;
-    }
-
-    public void setThirdObstaculo(int thirdObstaculo) {
-        this.thirdObstaculo = thirdObstaculo;
-    }
-
-     public int getxMovimentCirculoPontos() {
+    public int getxMovimentCirculoPontos() {
         return xMovimentCirculoPontos;
     }
 
@@ -175,7 +145,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         g2d.setFont(new Font("SANS-SERIF",Font.BOLD, 18));
         g2d.drawString("Pontos: "+ pontos, 25, 50);
         
-        // Quadrados com fins estéticos
+        // Painel de Game Over
         if(gameOverFlag)
             gameOverScreen(g2d);
         
@@ -201,7 +171,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
 
     }
     
-    // Posicionar primeiro 
+    // Função que tem como objectivo posicionar o primeiro obstáculo
     public void posicionarPrimeiroObstaculo()
     {
         if(circuloPontos != null)
@@ -236,9 +206,10 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
             
     }
     
+    // Função que tem como objectivo posicionar o segundo obstáculo
     public void posicionarSegundoObstaculo()
     {
-       
+        
         if(flagObst2 )
         {    
             if(circuloRecuar != null)
@@ -267,6 +238,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
 
   }   
     
+    // Função que tem como objectivo posicionar o terceiro obstáculo
     public void posicionarTerceiroObstaculo()
     {
         if(flagObst3)
@@ -294,6 +266,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
 
    }   
     
+    //Função que verifica a colisão que acontece com o circulo pontos
     public void verificarColisaoCirculoPontos()
     {
        
@@ -324,7 +297,8 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
       
     }    
 
-     public void verificarColisaoCirculoRecuarPos()
+    //Função que verifica a colisão que acontece com o círculo que faz recuar -10 na posição actual
+    public void verificarColisaoCirculoRecuarPos()
     {
        
         if (circuloRecuar != null) {
@@ -357,7 +331,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
       
     }    
     
-     
+    //Função que verifica a colisão que acontece com o quadrado de fim de jogo 
     public void verificarColisaoQuadrado()
     {
         
@@ -389,13 +363,14 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         }
       
     }
-     
-     public void gameOverScreen(Graphics2D g2d) {
+    
+    //Painel da Tela de Fim de jogo
+    public void gameOverScreen(Graphics2D g2d) {
         
         g2d.setPaint(Color.RED);
         g2d.fillRect(0, 0, getWidth(), getHeight());
         g2d.setColor(Color.WHITE);
-        g2d.setFont(new Font("ROBOTo", Font.BOLD, 50));
+        g2d.setFont(new Font("ROBOTO", Font.BOLD, 50));
         FontMetrics metrics = getFontMetrics(g2d.getFont());
         g2d.drawString("GAME OVER",
                 (getWidth() - metrics.stringWidth("GAME OVER"))/2,

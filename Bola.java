@@ -9,12 +9,13 @@ public class Bola {
     private int xMovimentAntecessor;
     private boolean obstaculoActivo;
     
-    public Bola(int posX, int posY, int width, int height,int numObstaculo) {
+    public Bola(int posX, int posY, int width, int height,int numObstaculo, boolean obstaculoActivo) {
         this.posX = posX;
         this.posY = posY;
         this.width = width;
         this.height = height;
         this.numObstaculo = numObstaculo;
+        this.obstaculoActivo = obstaculoActivo;
     }
     
     public void setPosX(int posX) {
@@ -80,7 +81,5 @@ public class Bola {
     public void setObstaculoActivo(boolean obstaculoActivo) {
         this.obstaculoActivo = obstaculoActivo;
     }
-
-    
-    
+   
 }
