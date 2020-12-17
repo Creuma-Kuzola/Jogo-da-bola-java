@@ -202,70 +202,53 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
     }
     
     // Posicionar primeiro 
-    public void posicionarFirsObs()
+    public void posicionarPrimeiroObstaculo()
     {
-        if(firstObstaculo == 1)
-        {
-            if(circuloPontos != null)
-            {    
-                if(flagObst1 == false)
-                {
-                    circuloPontos.setPosX(700);
-                    flagObst1 = true;
+        if(circuloPontos != null)
+        {    
+            if(flagObst1 == false)
+            {
+                circuloPontos.setPosX(700);
+                flagObst1 = true;
+            }
+                
+            if(circuloPontos.getPosX() == 610)      
+               flagObst2 = true;
+             
+            if(circuloPontos.getPosX() <= -300)
+            {
+                circuloPontos.setPosX(700);    
+                flagColidiuPontos = false;
+                    
+                System.out.println("x: "+x);
+                if(x == 6)
+                {    
+                    xMovimentCirculoPontos= 2;
+                    x = 1;
                 }
-                
-                if(circuloPontos.getPosX() == 610)
-                {  
-                   
-                    if(secondObstaculo == 2) 
-                       flagObst2 = true;
-                    else if(secondObstaculo == 3)  
-                       flagObst2 = true;
-                 } 
-                
-                if(circuloPontos.getPosX() <= -300)
-                {
-                    circuloPontos.setPosX(700);    
-                    flagColidiuPontos = false;
-                    
-                    System.out.println("x: "+x);
-                   if(x == 6)
-                   {    
-                       xMovimentCirculoPontos= 2;
-                       x = 1;
-                   }
-                   x +=1;
-                   xMovimentCirculoPontos +=1; 
-
-                    
-                }   
-                circuloPontos.setPosX(circuloPontos.getPosX() - xMovimentCirculoPontos); 
+                x +=1;
+                xMovimentCirculoPontos +=1; 
+     
+            }   
+            circuloPontos.setPosX(circuloPontos.getPosX() - xMovimentCirculoPontos); 
                
-            }          
-        }    
-        
+       }          
+            
     }
     
-    public void verificarNextObs2()
+    public void posicionarSegundoObstaculo()
     {
        
         if(flagObst2 )
         {    
-           if(quadrado != null && secondObstaculo == quadrado.getNumObstaculo())
-            {    
-                if(quadrado.getPosX() == 610)
-                        flagObst3 =true; 
-                if(quadrado.getPosX() == -300)
-                    quadrado.setPosX(800);     
-                quadrado.setPosX(quadrado.getPosX() -xMovimentQuadrado);
-            }
-            
-            if(circuloRecuar != null && secondObstaculo == circuloRecuar.getNumObstaculo())
-            {    if(circuloRecuar.getPosX() ==610)
-                        flagObst3 =true; 
-                 if(circuloRecuar.getPosX() <= -300)
-                 {    
-                    circuloRecuar.setPosX(800);
+            if(circuloRecuar != null)
+            {   
+                if(circuloRecuar.getPosX() ==610)
+                    flagObst3 =true; 
+                
+                if(circuloRecuar.getPosX() <= -300)
+                {    
+                   circuloRecuar.setPosX(800);
                     
                    if(x == 7)
                    {    
@@ -274,21 +257,21 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
                    }
                    x +=1;
                     xMovimentCirculoPosicao+=1;
-                 }
+                }
                  
                 circuloRecuar.setPosX(circuloRecuar.getPosX() - xMovimentCirculoPosicao);
-            }                    
+                
+            } 
+            
       }
 
   }   
     
-    public void verificarNextObs3()
+    public void posicionarTerceiroObstaculo()
     {
-       
         if(flagObst3)
         {    
-            
-           if(quadrado != null && thirdObstaculo == quadrado.getNumObstaculo())    
+           if(quadrado != null)    
            {    
                if(quadrado.getPosX() <= -300)
                {   
@@ -306,12 +289,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
                }    
                quadrado.setPosX(quadrado.getPosX() -xMovimentQuadrado);
            }
-           if(circuloRecuar != null && thirdObstaculo == circuloRecuar.getNumObstaculo()) 
-           {     
-               if(circuloRecuar.getPosX() == -300)
-                   circuloRecuar.setPosX(800);
-               circuloRecuar.setPosX(circuloRecuar.getPosX() - xMovimentCirculoPosicao);
-           }
+           
        }
 
    }   
@@ -380,9 +358,9 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
     }    
     
      
-     public void verificarColisaoQuadrado()
+    public void verificarColisaoQuadrado()
     {
-       
+        
         if (quadrado != null) {
             
             int bordaDirPrincipal = bolaPrincipal.getPosX() + bolaPrincipal.getWidth();
@@ -437,29 +415,26 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
     public void run() {
 
         try {
-  
-            firstObstaculo = 1;
-            secondObstaculo = 3;
-            thirdObstaculo = 2;
             
-          while (!gameOverFlag) 
-          {   
-              
-            posicionarFirsObs();
-            verificarNextObs2();
-            verificarNextObs3();   
-            verificarColisaoCirculoPontos();
-            verificarColisaoCirculoRecuarPos();
-            verificarColisaoQuadrado();         
-            this.atualizar();
-            this.repaint();
-            Thread.sleep(13);
-           }
-           thread.join();
+            while (!gameOverFlag) 
+            {   
 
-        } catch (InterruptedException e) {
-            System.out.println("Erro!");
-        }
+                posicionarPrimeiroObstaculo();
+                posicionarSegundoObstaculo();
+                posicionarTerceiroObstaculo();   
+                verificarColisaoCirculoPontos();
+                verificarColisaoCirculoRecuarPos();
+                verificarColisaoQuadrado();         
+                this.atualizar();
+                this.repaint();
+                Thread.sleep(13);
+            }
+            thread.join();
+
+          }catch (InterruptedException e) {
+              System.out.println("Erro!");
+          }
+    
     }
  
    
