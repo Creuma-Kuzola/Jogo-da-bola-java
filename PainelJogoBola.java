@@ -35,8 +35,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
     int pontos;
     int posInicialX=0,posFinalX=630;
     int controlXPontos = 0,controlXPos=0, controlXFimdeJogo=0;
-    boolean flagRedesenharCirculoPontos = false;
-    
+   
     //Métodos Getters e Setters  
     public int getxMovimentQuadrado() {
         return xMovimentQuadrado;
@@ -111,37 +110,17 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         
         // Anti-aliasing
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-   
-        // Estrada do jogo
-        g2d.setPaint(new Color(0, 0, 0));
-        g2d.fillRect(0, 277, 770, 80);
-
-        // Circulo Pontos(Magenta)
-        desenharCirculoPontos(g2d);
         
-        // Circulo Recuar -10 na Posição(Azul)
         desenharCirculoRecuar(g2d);
-        
-        //Quadrado vermelho de fim-de-jogo
         desenharQuadrado(g2d);   
-        
-        //Bola principal dp jogo(amarela)
-        g2d.setPaint(Color.YELLOW);
-        g2d.fillOval(bolaPrincipal.getPosX(), bolaPrincipal.getPosY(), bolaPrincipal.getWidth(), bolaPrincipal.getHeight());
-       
-        // String Pontos (Quadrado Magenta)
-        g2d.setPaint(Color.MAGENTA);  
-        g2d.fillRect(20,30, 150, 30);
-        
-        g2d.setPaint(Color.WHITE);
-        g2d.setFont(new Font("SANS-SERIF",Font.BOLD, 18));
-        g2d.drawString("Pontos: "+ pontos, 25, 50);
+        desenharBolaPrincipal(g2d);
+        desenharStringPontos(g2d);
         
         // Painel de Game Over
         if(gameOverFlag)
             gameOverScreen(g2d);
         
-        if(flagRedesenharCirculoPontos)
+        if(!flagColidiuPontos)
             desenharCirculoPontos(g2d);
         }
     
@@ -168,7 +147,29 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         g2d.fillRect(quadrado.getPosX(),quadrado.getPosY(),quadrado.getWidth(),quadrado.getHeight());
         g2d.setTransform(atf);
 
-    }   
+    }  
+    
+     public void desenharBolaPrincipal( Graphics2D g2d)
+    {
+        g2d.setPaint(Color.YELLOW);
+        g2d.fillOval(bolaPrincipal.getPosX(), bolaPrincipal.getPosY(), bolaPrincipal.getWidth(), bolaPrincipal.getHeight());
+
+    }  
+    
+    
+    public void desenharStringPontos( Graphics2D g2d){
+    
+        //Quadrado Magenta da String Pontos
+        g2d.setPaint(Color.MAGENTA);  
+        g2d.fillRect(20,30, 150, 30);
+        
+        // String Pontos
+        g2d.setPaint(Color.WHITE);
+        g2d.setFont(new Font("SANS-SERIF",Font.BOLD, 18));
+        g2d.drawString("Pontos: "+ pontos, 25, 50);
+
+        
+    } 
        //Função responsável por actualizar o teclado
       public void atualizar() {
 
@@ -262,7 +263,6 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
            {    
                if(quadrado.getPosX() <= -300)
                {   
-                   System.out.println("controlXFimdeJogo: "+controlXFimdeJogo);
                    if(controlXFimdeJogo == 11)
                    {    
                        xMovimentQuadrado= 2;
@@ -305,7 +305,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
                     {
                         flagColidiuPontos = true;
                         pontos+=5;
-                        flagRedesenharCirculoPontos = true;
+                        
                     }
                 }       
             }    
