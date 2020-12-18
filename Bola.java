@@ -1,4 +1,4 @@
-package JogoBola;
+//package JogoBola;
 
 public class Bola {
     
