@@ -120,22 +120,16 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         desenharCirculoPontos(g2d);
         
         // Circulo Recuar -10 na Posição(Azul)
-        atf = g2d.getTransform();
-        g2d.setPaint(new Color(37,153,179));
-        g2d.fillOval(circuloRecuar.getPosX(),circuloRecuar.getPosY(),circuloRecuar.getWidth(),circuloRecuar.getHeight());
-        g2d.setTransform(atf);
+        desenharCirculoRecuar(g2d);
         
         //Quadrado vermelho de fim-de-jogo
-        atf = g2d.getTransform();
-        g2d.setPaint(Color.RED);  
-        g2d.fillRect(quadrado.getPosX(),quadrado.getPosY(),quadrado.getWidth(),quadrado.getHeight());
-        g2d.setTransform(atf);
+        desenharQuadrado(g2d);   
         
         //Bola principal dp jogo(amarela)
         g2d.setPaint(Color.YELLOW);
         g2d.fillOval(bolaPrincipal.getPosX(), bolaPrincipal.getPosY(), bolaPrincipal.getWidth(), bolaPrincipal.getHeight());
        
-        // String Pontos
+        // String Pontos (Quadrado Magenta)
         g2d.setPaint(Color.MAGENTA);  
         g2d.fillRect(20,30, 150, 30);
         
@@ -147,7 +141,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         if(gameOverFlag)
             gameOverScreen(g2d);
         
-        if(!flagRedesenharCirculoPontos)
+        if(flagRedesenharCirculoPontos)
             desenharCirculoPontos(g2d);
         }
     
@@ -159,6 +153,22 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         g2d.setTransform(atf);
     }        
 
+    public void desenharCirculoRecuar( Graphics2D g2d)
+    {
+        atf = g2d.getTransform();
+        g2d.setPaint(new Color(37,153,179));
+        g2d.fillOval(circuloRecuar.getPosX(),circuloRecuar.getPosY(),circuloRecuar.getWidth(),circuloRecuar.getHeight());
+        g2d.setTransform(atf);
+    }   
+    
+    public void desenharQuadrado( Graphics2D g2d)
+    {
+        atf = g2d.getTransform();
+        g2d.setPaint(Color.RED);  
+        g2d.fillRect(quadrado.getPosX(),quadrado.getPosY(),quadrado.getWidth(),quadrado.getHeight());
+        g2d.setTransform(atf);
+
+    }   
        //Função responsável por actualizar o teclado
       public void atualizar() {
 
@@ -198,7 +208,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
                 circuloPontos.setPosX(700);    
                 flagColidiuPontos = false;
                     
-                if(controlXPontos == 5)
+                if(controlXPontos == 15)
                 {    
                     xMovimentCirculoPontos= 2;
                     controlXPontos = 1;
