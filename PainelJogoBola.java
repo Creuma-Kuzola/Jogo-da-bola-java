@@ -1,4 +1,7 @@
-package JogoBola;
+//package JogoBola;
+
+
+//package JogoBola;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -117,7 +120,9 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         g2d.fillRect(0, 277, 770, 80);
 
         // Circulo Pontos(Magenta)
-        desenharCirculoPontos(g2d);
+        if (!flagColidiuPontos) {
+            desenharCirculoPontos(g2d);
+        }
         
         // Circulo Recuar -10 na Posição(Azul)
         desenharCirculoRecuar(g2d);
@@ -126,8 +131,10 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         desenharQuadrado(g2d);   
         
         //Bola principal dp jogo(amarela)
+
         g2d.setPaint(Color.YELLOW);
         g2d.fillOval(bolaPrincipal.getPosX(), bolaPrincipal.getPosY(), bolaPrincipal.getWidth(), bolaPrincipal.getHeight());
+
        
         // String Pontos (Quadrado Magenta)
         g2d.setPaint(Color.MAGENTA);  
