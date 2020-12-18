@@ -1,25 +1,25 @@
+<<<<<<< HEAD
 //package JogoBola;
 
 
+=======
+package JogoBola;
+>>>>>>> 52303985a5b8e8da626aa37d08a9da0a4d11106a
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
 import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.GeneralPath;
-import java.util.Random;
 
 /**
  *
@@ -27,29 +27,23 @@ import java.util.Random;
  */
 public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
 
-    Bola bolaPrincipal,circuloPontos,circuloRecuarPosX;
+    
+    //Bloco de declaração de variáveis
+    Bola bolaPrincipal,circuloPontos,circuloRecuar;
     Quadrado quadrado;
     Teclado teclado = new Teclado();
     Thread thread;
-    public AffineTransform atf ;
-    private int angulo;
-    int diferX = 18, diferY=18;
-    private int xMovimentQuadrado = 300,xMovimentCiruloPontos=300, xMovimentCiruloPosicao =300;
-    private int nextObstaculoCome = 450;
-    private int firstObstaculo;
-    private int secondObstaculo;
-    private int thirdObstaculo;
-    int rand,numObstaculos=3;
+    public AffineTransform atf;
+    private int xMovimentQuadrado = 2,xMovimentCirculoPontos=2, xMovimentCirculoPosicao = 2;
+    private boolean flagObst1=false,flagObst2=false, flagObst3=false;
+    boolean flagColidiuPontos = false, flagColidiuRecuar = false, flagColidiuQuadrado = false;
+    boolean gameOverFlag=false;
+    int pontos;
+    int posInicialX=0,posFinalX=630;
+    int controlXPontos = 0,controlXPos=0, controlXFimdeJogo=0;
+    boolean flagRedesenharCirculoPontos = false;
     
-    // Getters e Setters  
-    public int getAngulo() {
-        return angulo;
-    }
-
-    public void setAngulo(int angulo) {
-        this.angulo = angulo;
-    }
-    
+    //Métodos Getters e Setters  
     public int getxMovimentQuadrado() {
         return xMovimentQuadrado;
     }
@@ -57,67 +51,58 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
     public void setxMovimentQuadrado(int xMovimentQuadrado) {
         this.xMovimentQuadrado = xMovimentQuadrado;
     }
-
-    public int getNextObstaculoCome() {
-        return nextObstaculoCome;
+    
+    public int getxMovimentCirculoPontos() {
+        return xMovimentCirculoPontos;
     }
 
-    public void setNextObstaculoCome(int nextObstaculoCome) {
-        this.nextObstaculoCome = nextObstaculoCome;
+    public void setxMovimentCiruloPontos(int xMovimentCirculoPontos) {
+        this.xMovimentCirculoPontos = xMovimentCirculoPontos;
     }
 
-    public int getFirstObstaculo() {
-        return firstObstaculo;
+    public int getxMovimentCirculoPosicao() {
+        return xMovimentCirculoPosicao;
     }
 
-    public void setFirstObstaculo(int firstObstaculo) {
-        this.firstObstaculo = firstObstaculo;
+    public void setxMovimentCirculoPosicao(int xMovimentCirculoPosicao) {
+        this.xMovimentCirculoPosicao = xMovimentCirculoPosicao;
     }
 
-    public int getSecondObstaculo() {
-        return secondObstaculo;
+        public boolean isFlagObst1() {
+        return flagObst1;
     }
 
-    public void setSecondObstaculo(int secondObstaculo) {
-        this.secondObstaculo = secondObstaculo;
+    public void setFlagObst1(boolean flagObst1) {
+        this.flagObst1 = flagObst1;
     }
 
-    public int getThirdObstaculo() {
-        return thirdObstaculo;
+    public boolean isFlagObst2() {
+        return flagObst2;
     }
 
-    public void setThirdObstaculo(int thirdObstaculo) {
-        this.thirdObstaculo = thirdObstaculo;
+    public void setFlagObst2(boolean flagObst2) {
+        this.flagObst2 = flagObst2;
     }
 
-     public int getxMovimentCiruloPontos() {
-        return xMovimentCiruloPontos;
+    public boolean isFlagObst3() {
+        return flagObst3;
     }
 
-    public void setxMovimentCiruloPontos(int xMovimentCiruloPontos) {
-        this.xMovimentCiruloPontos = xMovimentCiruloPontos;
+    public void setFlagObst3(boolean flagObst3) {
+        this.flagObst3 = flagObst3;
     }
 
-    public int getxMovimentCiruloPosicao() {
-        return xMovimentCiruloPosicao;
-    }
-
-    public void setxMovimentCiruloPosicao(int xMovimentCiruloPosicao) {
-        this.xMovimentCiruloPosicao = xMovimentCiruloPosicao;
-    }
-
-
-  
-   //Constructor  
+   //Constructor da classe
     public PainelJogoBola() {
       
-        new Thread(this).start();
+        thread = new Thread(this);
+        thread.start();
         
-        bolaPrincipal = new Bola(20, 290, 40, 40,0);
-        circuloPontos = new Bola(450,290,40,40,1);
-        quadrado = new Quadrado(300,290,40,40,2);
-        circuloRecuarPosX = new Bola(180,290,40,40,3);
-        
+        bolaPrincipal = new Bola(20, 290, 40, 40,0,false);
+        circuloPontos = new Bola(500,290,40,40,1,false);
+        quadrado = new Quadrado(800,290,40,40,2,false);
+        circuloRecuar = new Bola(800,290,40,40,3,false);
+        posInicialX = bolaPrincipal.getPosX();
         this.setFocusable(true);
         addKeyListener(teclado);
     }
@@ -128,163 +113,334 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
 
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
-        this.setBackground(Color.WHITE);
+        this.setBackground(new Color(0,0,0));
         
         // Anti-aliasing
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        
+   
         // Estrada do jogo
         g2d.setPaint(new Color(0, 0, 0));
         g2d.fillRect(0, 277, 770, 80);
 
-        atf = new AffineTransform();
-        g2d.getTransform();
+        // Circulo Pontos(Magenta)
+        desenharCirculoPontos(g2d);
         
-        g2d.translate(bolaPrincipal.getPosX(), bolaPrincipal.getPosY());
-        //atf.rotate(Math.toRadians(angulo),38,308);
-       // g2d.rotate(Math.toRadians(angulo),, ERROR);
-       
+        // Circulo Recuar -10 na Posição(Azul)
+        atf = g2d.getTransform();
+        g2d.setPaint(new Color(37,153,179));
+        g2d.fillOval(circuloRecuar.getPosX(),circuloRecuar.getPosY(),circuloRecuar.getWidth(),circuloRecuar.getHeight());
         g2d.setTransform(atf);
-      
         
-        g2d.getTransform();
-        atf = new AffineTransform();
-        g2d.translate(xMovimentCiruloPontos,0);
-
+        //Quadrado vermelho de fim-de-jogo
+        atf = g2d.getTransform();
+        g2d.setPaint(Color.RED);  
+        g2d.fillRect(quadrado.getPosX(),quadrado.getPosY(),quadrado.getWidth(),quadrado.getHeight());
+        g2d.setTransform(atf);
+        
+        //Bola principal dp jogo(amarela)
+        g2d.setPaint(Color.YELLOW);
+        g2d.fillOval(bolaPrincipal.getPosX(), bolaPrincipal.getPosY(), bolaPrincipal.getWidth(), bolaPrincipal.getHeight());
+       
+        // String Pontos
+        g2d.setPaint(Color.MAGENTA);  
+        g2d.fillRect(20,30, 150, 30);
+        
+        g2d.setPaint(Color.WHITE);
+        g2d.setFont(new Font("SANS-SERIF",Font.BOLD, 18));
+        g2d.drawString("Pontos: "+ pontos, 25, 50);
+        
+        // Painel de Game Over
+        if(gameOverFlag)
+            gameOverScreen(g2d);
+        
+        if(!flagRedesenharCirculoPontos)
+            desenharCirculoPontos(g2d);
+        }
+    
+    public void desenharCirculoPontos( Graphics2D g2d)
+    {
+        atf = g2d.getTransform();
         g2d.setPaint(Color.MAGENTA);
         g2d.fillOval(circuloPontos.getPosX(), circuloPontos.getPosY(), circuloPontos.getWidth(), circuloPontos.getHeight());
         g2d.setTransform(atf);
-        /*
-        g2d.setPaint(new Color(37,153,179));     
-        g2d.fillOval(circuloRecuarPosX.getPosX(),circuloRecuarPosX.getPosY(),circuloRecuarPosX.getWidth(),circuloRecuarPosX.getHeight());
-        */
-        
-        g2d.getTransform();
-        atf = new AffineTransform();
-        g2d.translate(xMovimentQuadrado,0);
-        
-        g2d.setPaint(Color.RED);    
-        g2d.fillRect(quadrado.getPosX(),quadrado.getPosY(),quadrado.getWidth(),quadrado.getHeight());
-       
-        g2d.setTransform(atf);
-        
-        g2d.setPaint(Color.YELLOW);
-        g2d.fillOval(bolaPrincipal.getPosX(), bolaPrincipal.getPosY(), bolaPrincipal.getWidth(), bolaPrincipal.getHeight());
-        
-        }
-    
-    
-     //Função responsável por gerar a ordem em que os obstáculos irão entrar
-        public int gerarOrdemDosObstaculos()
-        {  
-            int rand = new Random().nextInt(4);
-            while(true)
-            {
-                if(rand != 0) break;
-                else rand = new Random().nextInt(4);
-            }
-            System.out.println("Rand: "+rand);
-            return rand;
-        } 
-   
-        // Função responsável por posicionar o quadrado no jogo
-        public void posicionarQuadrado()
-        {
-           if(getxMovimentQuadrado() == -400)
-               setxMovimentQuadrado(300);
-        }    
-        
-       public void posicionarCirculoPontos()
-        {
-           if(getxMovimentCiruloPontos() == -400)
-               setxMovimentCiruloPontos(300);
-        }
-       
-       public void posicionarCirculoPosicao()
-        {
-           if(getxMovimentCiruloPosicao() == -400)
-               setxMovimentCiruloPosicao(300);
-        }
-        /*
-        public void posicionarObstaculos(){
-        
-            int rand;
-            
-            rand = gerarOrdemDosObstaculos();
-            if(rand == 1)
-            {
-                setFirstObstaculo(1);
-                while(true)
-                {
-                    setxMovimentCiruloPontos(getxMovimentCiruloPontos()-5);
-                    if(getxMovimentCiruloPosicao() == -400)
-                        setxMovimentCiruloPosicao(300);
-                    System.out.println("Entrei");
-                }    
-                
-              
-            }
-            
-               
-        }*/
-    
-             
+    }        
+
        //Função responsável por actualizar o teclado
       public void atualizar() {
 
         if (teclado.isCima()) 
-        {
-            bolaPrincipal.setPosY(bolaPrincipal.getPosY() - 2);
-             //atf.rotate(Math.toRadians(angulo),bolaPrincipal.getPosX()+diferX,bolaPrincipal.getPosY()+diferY);
-        }    
+            bolaPrincipal.setPosY(bolaPrincipal.getPosY() - 4);
+              
         if (teclado.isBaixo()) 
-            bolaPrincipal.setPosY(bolaPrincipal.getPosY() + 2);
+            bolaPrincipal.setPosY(bolaPrincipal.getPosY() + 4);
         
         if (teclado.isFrente()) 
-            bolaPrincipal.setPosX(bolaPrincipal.getPosX() + 2);
+            bolaPrincipal.setPosX(bolaPrincipal.getPosX() + 4);
        
     }
-
+      
+    // Função da interface ActionListener
     @Override
     public void actionPerformed(ActionEvent arg0) {
 
     }
+    
+    // Função que tem como objectivo posicionar o primeiro obstáculo
+    public void posicionarPrimeiroObstaculo()
+    {
+        if(circuloPontos != null)
+        {    
+            if(flagObst1 == false)
+            {
+                circuloPontos.setPosX(700);
+                flagObst1 = true;
+            }
+                
+            if(circuloPontos.getPosX() == 610)      
+               flagObst2 = true;
+             
+            if(circuloPontos.getPosX() <= -300)
+            {
+                circuloPontos.setPosX(700);    
+                flagColidiuPontos = false;
+                    
+                if(controlXPontos == 5)
+                {    
+                    xMovimentCirculoPontos= 2;
+                    controlXPontos = 1;
+                }
+                controlXPontos +=1;
+                xMovimentCirculoPontos +=1; 
+     
+            }   
+            circuloPontos.setPosX(circuloPontos.getPosX() - xMovimentCirculoPontos); 
+               
+       }          
+            
+    }
+    
+    // Função que tem como objectivo posicionar o segundo obstáculo
+    public void posicionarSegundoObstaculo()
+    {
+        
+        if(flagObst2 )
+        {    
+            if(circuloRecuar != null)
+            {   
+                if(circuloRecuar.getPosX() == 610)
+                    flagObst3 =true; 
+                
+                if(circuloRecuar.getPosX() <= -300)
+                {  
+                   circuloRecuar.setPosX(800);
+                   if(controlXPos == 7)
+                   {    
+                       xMovimentCirculoPosicao= 2;
+                       controlXPos = 1;
+                   }
+                   controlXPos +=1;
+                   xMovimentCirculoPosicao+=1;
+                }
+                 
+                circuloRecuar.setPosX(circuloRecuar.getPosX() - xMovimentCirculoPosicao);
+            } 
+            
+      }
 
+  }   
+    
+    // Função que tem como objectivo posicionar o terceiro obstáculo
+    public void posicionarTerceiroObstaculo()
+    {
+        if(flagObst3)
+        {    
+           if(quadrado != null)    
+           {    
+               if(quadrado.getPosX() <= -300)
+               {   
+                   System.out.println("controlXFimdeJogo: "+controlXFimdeJogo);
+                   if(controlXFimdeJogo == 11)
+                   {    
+                       xMovimentQuadrado= 2;
+                       controlXFimdeJogo = 1;
+                   }
+                   controlXFimdeJogo +=1;
+                   xMovimentQuadrado+=1;
+                   quadrado.setPosX(800);
+                 
+               }   
+               
+               quadrado.setPosX(quadrado.getPosX() -xMovimentQuadrado);
+           }
+           
+       }
+
+   }   
+    
+    //Função que verifica a colisão que acontece com o circulo pontos
+    public void verificarColisaoCirculoPontos()
+    {
+       
+        if (bolaPrincipal != null) {
+            
+            int bordaDirPrincipal = bolaPrincipal.getPosX() + bolaPrincipal.getWidth();
+            int bordaEsquerdaPrincipal = bolaPrincipal.getPosX();
+            int bordaBaixoPrincipal = bolaPrincipal.getPosY() + bolaPrincipal.getHeight();
+
+            int bordaDirPontos = circuloPontos.getPosX() + circuloPontos.getWidth();
+            int bordaEsquerdaPontos = circuloPontos.getPosX();
+            int bordaTopoPontos = circuloPontos.getPosY();
+
+            if(flagColidiuPontos == false)
+            {    
+                if(bordaBaixoPrincipal >= bordaTopoPontos) {
+                    
+                    if((bordaDirPrincipal >= bordaEsquerdaPontos && bordaDirPrincipal <= bordaDirPontos) 
+                    ||(bordaEsquerdaPrincipal >= bordaEsquerdaPontos && bordaEsquerdaPrincipal <= bordaDirPontos))
+
+                    {
+                        flagColidiuPontos = true;
+                        pontos+=5;
+                        flagRedesenharCirculoPontos = true;
+                    }
+                }       
+            }    
+        }
+      
+    }    
+
+    //Função que verifica a colisão que acontece com o círculo que faz recuar -10 na posição actual
+    public void verificarColisaoCirculoRecuarPos()
+    {
+       
+        if (circuloRecuar != null) {
+            
+            int bordaDirPrincipal = bolaPrincipal.getPosX() + bolaPrincipal.getWidth();
+            int bordaEsquerdaPrincipal = bolaPrincipal.getPosX();
+            int bordaBaixoPrincipal = bolaPrincipal.getPosY() + bolaPrincipal.getHeight();
+            
+            int bordaDirRecuar = circuloRecuar.getPosX() + circuloRecuar.getWidth();
+            int bordaEsquerdaRecuar = circuloRecuar.getPosX();
+            int bordaTopoRecuar = circuloRecuar.getPosY();
+            
+            if(flagColidiuRecuar == false)
+            {    
+                
+                if(bordaBaixoPrincipal >= bordaTopoRecuar) {
+                    if((bordaDirPrincipal >= bordaEsquerdaRecuar && bordaDirPrincipal <= bordaDirRecuar) 
+                        ||(bordaEsquerdaPrincipal >= bordaEsquerdaRecuar && bordaEsquerdaPrincipal <= bordaDirRecuar))
+                        {
+                            
+                            if(bolaPrincipal.getPosX() - 50 < 0){
+                                gameOverFlag = true;
+                            }
+                            bolaPrincipal.setPosX(bolaPrincipal.getPosX()-50);
+
+                        }
+                }
+            }    
+        }
+      
+    }    
+    
+    //Função que verifica a colisão que acontece com o quadrado de fim de jogo 
+    public void verificarColisaoQuadrado()
+    {
+        
+        if (quadrado != null) {
+            
+            int bordaDirPrincipal = bolaPrincipal.getPosX() + bolaPrincipal.getWidth();
+            int bordaEsquerdaPrincipal = bolaPrincipal.getPosX();
+            int bordaBaixoPrincipal = bolaPrincipal.getPosY() + bolaPrincipal.getHeight();
+            
+            int bordaDirQuadrado = quadrado.getPosX() + quadrado.getWidth();
+            int bordaEsquerdaQuadrado = quadrado.getPosX();
+            int bordaTopoQuadrado = quadrado.getPosY();
+
+            if(flagColidiuQuadrado == false)
+            {    
+               
+                if(bordaBaixoPrincipal >= bordaTopoQuadrado) {
+                   if((bordaDirPrincipal >= bordaEsquerdaQuadrado && bordaDirPrincipal <= bordaDirQuadrado) 
+                    ||(bordaEsquerdaPrincipal >= bordaEsquerdaQuadrado && bordaEsquerdaPrincipal <= bordaDirQuadrado))
+                    {
+                            gameOverFlag=true;
+
+                    }
+                
+                }
+
+
+            }    
+        }
+      
+    }
+    
+    //Painel da Tela de Fim de jogo
+    public void gameOverScreen(Graphics2D g2d) {
+        
+        g2d.setPaint(Color.RED);
+        g2d.fillRect(0, 0, getWidth(), getHeight());
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(new Font("ROBOTO", Font.BOLD, 50));
+        FontMetrics metrics = getFontMetrics(g2d.getFont());
+        g2d.drawString("GAME OVER",
+                (getWidth() - metrics.stringWidth("GAME OVER"))/2,
+                (getHeight())/2);
+    
+        g2d.setColor(Color.BLACK);
+        g2d.setFont(new Font("Arial", Font.BOLD, 25));
+        g2d.drawString("Pontos: " + this.pontos,
+                (getWidth() - metrics.stringWidth("Score: " + this.pontos))/2,
+                ((getHeight())/2) + 45);
+    }
+    
+    
+    public void situcoesExcepcionaisDeFimDeJogo()
+    {
+        if(bolaPrincipal!= null)
+        {
+           if(bolaPrincipal.getPosX() >= 630)
+              gameOverFlag=true;
+           
+           if(bolaPrincipal.getPosY() >= 300)
+              gameOverFlag=true;
+           
+           if(bolaPrincipal.getPosY() <= 0)
+              gameOverFlag=true;
+           
+        }    
+    }        
+      
+     
+    // Função responsável por fazer o código rodar
     @Override
     public void run() {
 
         try {
-
             
-            while (true) {
-                
-              //  this.posicionarObstaculos();
-              if(numObstaculos > 4)
-              {    
-                rand = gerarOrdemDosObstaculos();
-                if(rand == 1)
-                {
-                    this.posicionarCirculoPontos();
-                    numObstaculos--;
-                }    
-                if(getxMovimentCiruloPontos() == 250)
-                    this.posicionarQuadrado();
-                setxMovimentQuadrado(getxMovimentQuadrado()-5);
-                
-              }
-                this.atualizar();
-                this.repaint();
+            while (!gameOverFlag) 
+            {   
+
+                posicionarPrimeiroObstaculo();
+                verificarColisaoCirculoPontos();
+                posicionarSegundoObstaculo();
+                posicionarTerceiroObstaculo();  
+               
+                verificarColisaoCirculoRecuarPos();
+                verificarColisaoQuadrado();   
+                situcoesExcepcionaisDeFimDeJogo();
+                atualizar();
+                repaint();
                 Thread.sleep(13);
-                setAngulo(getAngulo()+1);
-                setxMovimentCiruloPontos(getxMovimentCiruloPontos()-5);
-                
-                
             }
+            thread.join();
 
-        } catch (InterruptedException e) {
-            System.out.println("Erro!");
-        }
+          }catch (InterruptedException e) {
+              System.out.println("Erro!");
+          }
+    
     }
-
-       
+ 
+   
 }

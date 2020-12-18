@@ -15,13 +15,16 @@ public class Quadrado {
     private int width, height;
     private int velocidadeX;
     private int numObstaculo;
+    private int xMovimentAntecessor;
+    private boolean obstaculoActivo;
     
-    public Quadrado(int posX, int posY, int width, int height,int numObstaculo) {
+    public Quadrado(int posX, int posY, int width, int height,int numObstaculo,boolean obstaculoActivo) {
         this.posX = posX;
         this.posY = posY;
         this.width = width;
         this.height = height;
         this.numObstaculo = numObstaculo;
+        this.obstaculoActivo = obstaculoActivo;
     }
     public void setPosX(int posX) {
         this.posX = posX;
@@ -70,4 +73,23 @@ public class Quadrado {
     public void setNumObstaculo(int numObstaculo) {
         this.numObstaculo = numObstaculo;
     }
+    
+    public int getxMovimentAntecessor() {
+        return xMovimentAntecessor;
+    }
+
+    public void setxMovimentAntecessor(int xMovimentAntecessor) {
+        this.xMovimentAntecessor = xMovimentAntecessor;
+    }
+
+    public boolean isObstaculoActivo() {
+        return obstaculoActivo;
+    }
+
+    public void setObstaculoActivo(boolean obstaculoActivo) {
+        this.obstaculoActivo = obstaculoActivo;
+    }
+
+    
+    
 }
