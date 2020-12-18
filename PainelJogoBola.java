@@ -35,6 +35,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
     int pontos;
     int posInicialX=0,posFinalX=630;
     int controlXPontos = 0,controlXPos=0, controlXFimdeJogo=0;
+    boolean flagRedesenharCirculoPontos = false;
     
     //Métodos Getters e Setters  
     public int getxMovimentQuadrado() {
@@ -146,6 +147,8 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
         if(gameOverFlag)
             gameOverScreen(g2d);
         
+        if(!flagRedesenharCirculoPontos)
+            desenharCirculoPontos(g2d);
         }
     
     public void desenharCirculoPontos( Graphics2D g2d)
@@ -195,12 +198,12 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
                 circuloPontos.setPosX(700);    
                 flagColidiuPontos = false;
                     
-                /*if(controlXPontos == 5)
+                if(controlXPontos == 5)
                 {    
                     xMovimentCirculoPontos= 2;
                     controlXPontos = 1;
                 }
-                controlXPontos +=1;*/
+                controlXPontos +=1;
                 xMovimentCirculoPontos +=1; 
      
             }   
@@ -224,12 +227,12 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
                 if(circuloRecuar.getPosX() <= -300)
                 {  
                    circuloRecuar.setPosX(800);
-                  /* if(controlXPos == 7)
+                   if(controlXPos == 7)
                    {    
                        xMovimentCirculoPosicao= 2;
                        controlXPos = 1;
-                   }*/
-                   //controlXPos +=1;
+                   }
+                   controlXPos +=1;
                    xMovimentCirculoPosicao+=1;
                 }
                  
@@ -250,17 +253,17 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
                if(quadrado.getPosX() <= -300)
                {   
                    System.out.println("controlXFimdeJogo: "+controlXFimdeJogo);
-                  /* if(controlXFimdeJogo == 11)
+                   if(controlXFimdeJogo == 11)
                    {    
                        xMovimentQuadrado= 2;
                        controlXFimdeJogo = 1;
-                   }*/
-                   //controlXFimdeJogo +=1;
+                   }
+                   controlXFimdeJogo +=1;
                    xMovimentQuadrado+=1;
                    quadrado.setPosX(800);
-                   
-                   
-               }    
+                 
+               }   
+               
                quadrado.setPosX(quadrado.getPosX() -xMovimentQuadrado);
            }
            
@@ -292,6 +295,7 @@ public class PainelJogoBola extends JPanel implements ActionListener, Runnable {
                     {
                         flagColidiuPontos = true;
                         pontos+=5;
+                        flagRedesenharCirculoPontos = true;
                     }
                 }       
             }    
